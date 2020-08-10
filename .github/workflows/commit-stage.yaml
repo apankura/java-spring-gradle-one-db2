@@ -17,6 +17,7 @@ jobs:
         - name: current directory
           run: pwd
         - name: list directory
-          run: ls -R
+          run: ls
         - name: docker compose build                  
-          run: bash ./DB2/containers/build.sh
+          working-directory: ./DB2/containers
+          run: docker-compose build
