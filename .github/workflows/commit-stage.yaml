@@ -11,6 +11,7 @@ jobs:
       name: Build      
       runs-on: ubuntu-latest
       steps:        
+        - uses: actions/checkout@v2
         - name: docker version        
           run: docker --version
         - name: current directory
