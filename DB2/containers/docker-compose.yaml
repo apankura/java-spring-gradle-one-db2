@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  db2compose:
+        build:
+          context: ./..
+          dockerfile: ./containers/Dockerfile
+        image: sut/db2
