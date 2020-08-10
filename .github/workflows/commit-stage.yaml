@@ -22,8 +22,9 @@ jobs:
           working-directory: ./DB2/containers
           run: docker-compose build
         - name: docker login
-          run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+          run: docker login -u="${{ secrets.DOCKER_USERNAME }}" --password-stdin="${{ secrets.DOCKER_PASSWORD }}"
         - name: docker tag
           run: |
                   docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:latest
-                  docker push apankura/java-spring-gradle-one-db2-db2:latest       
+                  docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:${{ GITHUB_SHA }}                  
+                  docker push apankura/java-spring-gradle-one-db2-db2
