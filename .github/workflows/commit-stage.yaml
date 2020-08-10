@@ -26,5 +26,5 @@ jobs:
         - name: docker tag
           run: |
                   docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:latest
-                  docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:${{ GITHUB_SHA }}                  
+                  docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:${{ github.sha }}                  
                   docker push apankura/java-spring-gradle-one-db2-db2
