@@ -13,5 +13,9 @@ jobs:
       steps:        
         - name: docker version        
           run: docker --version
-        - name: docker compose build        
+        - name: current directory
+          run: pwd
+        - name: list directory
+          run: ls -R
+        - name: docker compose build                  
           run: bash ./DB2/containers/build.sh
