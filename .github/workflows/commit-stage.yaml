@@ -17,7 +17,13 @@ jobs:
         - name: current directory
           run: pwd
         - name: list directory
-          run: ls
+          run: ls          
         - name: docker compose build                  
           working-directory: ./DB2/containers
           run: docker-compose build
+        - name: docker login
+          run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+        - name: docker tag
+          run: |
+                  docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:latest
+                  docker push apankura/java-spring-gradle-one-db2-db2:latest       
