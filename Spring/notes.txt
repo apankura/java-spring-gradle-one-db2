@@ -1,0 +1,8 @@
+# rebuild wrappers
+gradle wrapper
+gradle wrapper --gradle-version 6.2 --distribution-type all
+
+
+java -cp .\gs-spring-boot-0.1.0.jar -Dloader.main=com.example.demo.DemoApplication org.springframework.boot.loader.PropertiesLauncher
+
+java -jar demo.jar

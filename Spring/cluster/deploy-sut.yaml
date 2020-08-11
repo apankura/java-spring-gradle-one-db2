@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-session-deployment
+  namespace: sut
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: spring-session-pod
+  template:
+    metadata:
+      labels:
+        key: spring-session-pod
+    spec:
+      containers:
+      - name: sut-container
+        image: localhost:32000/sut/spring-session:latest
+        imagePullPolicy: Always
+        ports:
+            - containerPort: 48601        
