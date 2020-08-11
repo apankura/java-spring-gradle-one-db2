@@ -1,10 +1,10 @@
 name: Build Apankura Image
-# This workflow is triggered on pushes to the repository.
+
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    paths:
+    - 'DB2/**'  
 
 jobs:
     build_db2:
@@ -30,19 +30,3 @@ jobs:
                   docker push apankura/java-spring-gradle-one-db2-db2
   
       
-    build_spring:      
-      name: Build Spring
-      runs-on: ubuntu-latest
-      steps:        
-        - uses: actions/checkout@v2                   
-        - name: docker compose build                  
-          working-directory: ./Spring/containers
-          run: docker-compose build
-        - name: docker login
-          run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
-        - name: docker tag
-          run: |
-                  docker tag sut/spring-session apankura/java-spring-gradle-one-db2-spring:latest
-                  docker tag sut/spring-session apankura/java-spring-gradle-one-db2-spring:${{ github.sha }}                  
-                  docker push apankura/java-spring-gradle-one-db2-spring
-    
