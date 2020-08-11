@@ -42,7 +42,7 @@ jobs:
           run: docker login -u="${{ secrets.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
         - name: docker tag
           run: |
-                  docker tag sut/db2 apankura/java-spring-gradle-one-db2-spring:latest
-                  docker tag sut/db2 apankura/java-spring-gradle-one-db2-spring:${{ github.sha }}                  
+                  docker tag sut/spring-session apankura/java-spring-gradle-one-db2-spring:latest
+                  docker tag sut/spring-session apankura/java-spring-gradle-one-db2-spring:${{ github.sha }}                  
                   docker push apankura/java-spring-gradle-one-db2-spring
     
