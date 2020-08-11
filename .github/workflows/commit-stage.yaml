@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-    build:
+    build_db2:
       name: Build DB2   
       runs-on: ubuntu-latest
       steps:        
@@ -30,7 +30,7 @@ jobs:
                   docker push apankura/java-spring-gradle-one-db2-db2
   
       
-    build:      
+    build_spring:      
       name: Build Spring
       runs-on: ubuntu-latest
       steps:        
