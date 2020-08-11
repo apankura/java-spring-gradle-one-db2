@@ -7,8 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-    build:      
-    - name: Build DB2   
+    build:
+      name: Build DB2   
       runs-on: ubuntu-latest
       steps:        
         - uses: actions/checkout@v2
@@ -29,8 +29,9 @@ jobs:
                   docker tag sut/db2 apankura/java-spring-gradle-one-db2-db2:${{ github.sha }}                  
                   docker push apankura/java-spring-gradle-one-db2-db2
   
-
-    - name: Build Spring
+      
+    build:      
+      name: Build Spring
       runs-on: ubuntu-latest
       steps:        
         - uses: actions/checkout@v2                   
