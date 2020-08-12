@@ -1,8 +1,13 @@
+# deploy database 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-db2
   namespace: sut
+  labels:
+    tier: database
+    family: db2
+    apankura: 'v1'
 spec:
   replicas: 1
   selector:
@@ -33,6 +38,11 @@ spec:
           volumeMounts:
             - mountPath: /database
               name: db2-volume
+          readinessProbe:
+            tcpSocket:
+                port: 50000
+            initialDelaySeconds: 5
+            periodSeconds: 10
 
 ---
 
@@ -44,55 +54,61 @@ metadata:
 spec:  
     type: ClusterIP
     selector:
-    key: pod-db2
+        key: pod-db2
     ports:
     - name: host
-        protocol: TCP      
-        port: 48100
-        targetPort: 50000
+      protocol: TCP      
+      port: 48100
+      targetPort: 50000
 
 ---
+# deployment api
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: spring-session-deployment
     namespace: sut
+    labels:
+        tier: api
+        family: spring        
+        apankura: 'v1'
 spec:
     replicas: 1
     selector:
-    matchLabels:
-        key: spring-session-pod
+        matchLabels:
+            key: spring-session-pod
     template:
-    metadata:
-        labels:
-        key: spring-session-pod
-    spec:
-        containers:
-        - name: sut-container
-          image: apankura/java-spring-gradle-one-db2-spring
-          imagePullPolicy: Always
-          ports:
-          - containerPort: 48601    
-          env:
-          - name: "SPRING_PROFILES_ACTIVE"
-            value: "k8s"
-          - name: "DB2_HOST"
-            value: "k8s" 
+        metadata:
+            labels:
+                key: spring-session-pod
+        spec:
+            containers:
+            - name: sut-container
+              image: apankura/java-spring-gradle-one-db2-spring
+              imagePullPolicy: Always
+              ports:
+              - containerPort: 48601    
+              env:
+                - name: "SPRING_PROFILES_ACTIVE"
+                  value: "k8s"
+                - name: "DB2_HOST"
+                  value: "k8s" 
             
-
-
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
     name: service-sut
-    namespace: sutrrer en linu
+    namespace: sut
+    labels:
+        apankura: 'v1'
+        tier: api
 spec:  
     type: ClusterIP
     selector:
-    key: spring-session-pod
+        key: spring-session-pod
     ports:
     - name: site
       protocol: TCP      
