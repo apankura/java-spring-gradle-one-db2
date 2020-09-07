@@ -1,8 +1,7 @@
-# deploy database 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploy-db2
+  name: deployment-db2
   namespace: sut
   labels:
     tier: database
@@ -24,6 +23,10 @@ spec:
       containers:
         - name: db
           image: apankura/java-spring-gradle-one-db2-db2
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
           ports:
             - containerPort: 50000
           env:
@@ -49,7 +52,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: service-db2-session
+    name: service-db2
     namespace: sut
 spec:  
     type: ClusterIP
@@ -67,7 +70,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: spring-session-deployment
+    name: deployment-api
     namespace: sut
     labels:
         tier: api
@@ -87,8 +90,12 @@ spec:
             - name: sut-container
               image: apankura/java-spring-gradle-one-db2-spring
               imagePullPolicy: Always
+              resources:
+                limits:
+                  cpu: "0.5"
+                  memory: "500Mi"              
               ports:
-              - containerPort: 48601    
+              - containerPort: 46801    
               env:
                 - name: "SPRING_PROFILES_ACTIVE"
                   value: "k8s"
@@ -100,11 +107,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-    name: service-sut
+    name: service-api
     namespace: sut
     labels:
-        apankura: 'v1'
-        tier: api
+      apankura: 'v1'
+      tier: api
 spec:  
     type: ClusterIP
     selector:
