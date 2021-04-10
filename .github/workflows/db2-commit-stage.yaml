@@ -1,4 +1,4 @@
-name: Build Apankura Image
+name: Build Apankura DB2 Image
 
 on:
   push:
